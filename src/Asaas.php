@@ -22,6 +22,7 @@ class Asaas {
     public $webhook;
     public $antecipacao;
     public $extrato;
+    public $finance;
     public $pagarconta;
     public $NotaFiscal;
     public $MinhaConta;
@@ -44,6 +45,7 @@ class Asaas {
         $this->notificacao = new Notificacao($this->connection);
         $this->transferencia = new Transferencia($this->connection);
         $this->extrato = new Extrato($this->connection);
+        $this->finance = new Finance($this->connection);
         $this->antecipacao = new Antecipacao($this->connection);
         $this->pagarconta = new PagarConta($this->connection);
         $this->NotaFiscal = new NotaFiscal($this->connection);
@@ -104,6 +106,15 @@ class Asaas {
     public function Extrato(){
         $this->extrato = new Extrato($this->connection);
         return $this->extrato;
+    }
+
+    public function finance(){
+        $this->finance = new Finance($this->connection);
+        return $this->finance;
+    }
+
+    public function InformacoesFinanceiras(){
+        return $this->finance();
     }
 
     public function Antecipacao(){
