@@ -108,12 +108,14 @@ class Asaas {
         return $this->extrato;
     }
 
-    public function finance(){
+    public function finance(): Finance
+    {
         $this->finance = new Finance($this->connection);
         return $this->finance;
     }
 
-    public function InformacoesFinanceiras(){
+    public function InformacoesFinanceiras(): Finance
+    {
         return $this->finance();
     }
 

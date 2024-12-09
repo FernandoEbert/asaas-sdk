@@ -9,7 +9,7 @@ namespace FernandoEbert\Asaas;
  * @copyright (c) year, Fernando Ebert fernando@fernandoebert.com.br @FernandoEbert
  */
 
-class Extrato {
+class Finance {
 
     public $http;
 
