@@ -1,8 +1,7 @@
 <?php
 
-namespace CodePhix\Asaas;
+namespace FernandoEbert\Asaas;
 
-use CodePhix\Asaas\Connection;
 use \Exception;
 
 class SubContas
@@ -19,21 +18,21 @@ class SubContas
     public function getAll(array $filtros = [])
     {
         $filtros = ((!empty($filtros)) ? http_build_query($filtros) : '');
-        return $this->http->get('/accounts?'.$filtros);
+        return $this->http->get('/accounts?' . $filtros);
     }
 
     // Retorna dados de uma subconta
-    public function getByid(?String $id)
+    public function getByid(?string $id)
     {
         $filtros = ['id' => $id];
         $filtros = ((!empty($filtros)) ? http_build_query($filtros) : '');
-        return $this->http->get('/accounts?'.$filtros);
+        return $this->http->get('/accounts?' . $filtros);
     }
 
     // Cria uma nova subconta
     public function create(array $dados = [])
     {
-        return $this->http->post('/accounts?',$dados);
+        return $this->http->post('/accounts?', $dados);
     }
 
 }
