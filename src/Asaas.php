@@ -23,6 +23,7 @@ class Asaas {
     public $antecipacao;
     public $extrato;
     public $finance;
+    public $creditCard;
     public $pagarconta;
     public $NotaFiscal;
     public $MinhaConta;
@@ -60,6 +61,12 @@ class Asaas {
         $this->Conta     = new Conta($this->connection);
         $this->Finance     = new Finance($this->connection);
         $this->SubContas     = new SubContas($this->connection);
+        $this->creditCard = new CreditCard($this->connection);
+    }
+
+    public function creditCard(){
+        $this->creditCard = new CreditCard($this->connection);
+        return $this->creditCard;
     }
 
     public function Assinatura(){
