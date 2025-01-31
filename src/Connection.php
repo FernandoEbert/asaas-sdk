@@ -35,8 +35,12 @@ class Connection
         curl_setopt($ch, CURLOPT_URL, $this->base_url . '/v3' . $url . $option);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
+<<<<<<< HEAD
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'LaravelJob/1.0';
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
+=======
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown');
+>>>>>>> 8eabe3baacebb2e0047663ef3c087a47fdd0c8c1
 
 
         if (empty($this->headers)) {
@@ -65,6 +69,11 @@ class Connection
         return $response;
     }
 
+    private function requestApi($metodo = 'POST', $url = '', ?array $params = [], $json = true, $raw = 1)
+    {
+
+    }
+
     public function post($url, $params)
     {
         $params = json_encode($params);
@@ -77,8 +86,8 @@ class Connection
         curl_setopt($ch, CURLOPT_POST, TRUE);
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown');
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Content-Type: application/json",
@@ -87,6 +96,76 @@ class Connection
 
         $response = curl_exec($ch);
         curl_close($ch);
+        $response = json_decode($response);
+
+        if (empty($response)) {
+            $response = new stdClass();
+            $response->error = [];
+            $response->error[0] = new stdClass();
+            $response->error[0]->description = 'Tivemos um problema ao processar a requisição.';
+        }
+
+        return $response;
+    }
+
+    public function put($url, $params)
+    {
+        $params = json_encode($params);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $this->base_url . '/v3' . $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => $params,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'access_token: ' . $this->api_key
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response);
+
+        if (empty($response)) {
+            $response = new stdClass();
+            $response->error = [];
+            $response->error[0] = new stdClass();
+            $response->error[0]->description = 'Tivemos um problema ao processar a requisição.';
+        }
+
+        return $response;
+    }
+
+    public function delete($url)
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $this->base_url . '/v3' . $url,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'DELETE',
+          CURLOPT_HTTPHEADER => array(
+            'Accept: application/json',
+            'access_token: '. $this->api_key
+          ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
         $response = json_decode($response);
 
         if (empty($response)) {
