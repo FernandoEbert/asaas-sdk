@@ -103,11 +103,11 @@ class Asaas {
 
     /**
      * @param $token
-     * @param bool $status
+     * @param $status
      */
-    public function __construct($token, bool $status = false)
+    public function __construct($token, $status = null)
     {
-        $this->connection = new Connection($token, ((!empty($status)) ? $status : 'producao'));
+        $this->connection           = new Connection($token, ((!empty($status)) ? $status : 'producao'));
         $this->assinatura           = new Assinatura($this->connection);
         $this->cidade               = new Cidades($this->connection);
         $this->cliente              = new Cliente($this->connection);
