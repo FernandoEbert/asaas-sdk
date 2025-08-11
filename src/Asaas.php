@@ -97,6 +97,11 @@ class Asaas {
     public $SubContas;
 
     /**
+     * @var Checkout
+     */
+    public $Checkout;
+
+    /**
      * @var Connection
      */
     private $connection;
@@ -130,6 +135,7 @@ class Asaas {
         $this->Finance              = new Finance($this->connection);
         $this->SubContas            = new SubContas($this->connection);
         $this->creditCard           = new CreditCard($this->connection);
+        $this->Checkout             = new Checkout($this->connection);
     }
 
     /**
@@ -318,6 +324,11 @@ class Asaas {
     {
         $this->webhook     = new Webhook($this->connection);
         return $this->webhook;
+    }
+
+    public function Checkout(){
+        $this->Checkout     = new Checkout($this->connection);
+        return $this->Checkout;
     }
 
 }
